@@ -15,51 +15,82 @@ asegurese de tener instalada la libreria de: sympy
 from tkinter import * 
 from tkinter import messagebox
 from math import sin, cos, tan 
-from math import pi 
+from math import pi
+from tkinter.ttk import Combobox 
 from sympy import *  #libreria para las derivadas e integrales
 
+
+
 class app(Tk):
-    def __init__(self):
+    def __init__(self): 
         Tk.__init__(self)
         self._root = Frame() #crea el frame principal
-        self.geometry("1400x1400")
+        self.geometry("250x250")
         self.title("🤑 Parcial 2 🤑")
         self.config(bg="#ffafcc")
-
-        #objetos
-        self.l1=Label(text="Distancia (m):");self.l1.place(x=10,y=10); self.l1.config(bg="#ffc2d1")
-        self.e1=Entry(self);self.e1.place(x=110,y=10)
-
-        self.l2=Label(text="Longitud (m):");self.l2.place(x=10,y=50); self.l2.config(bg="#ffddd2")
-        self.e2=Entry(self);self.e2.place(x=110,y=50)
-
-        self.l3=Label(text="diferencia de potencial (V):");self.l3.place(x=10,y=90); self.l3.config(bg="#ff8fab")
-        self.e3=Entry(self);self.e3.place(x=110,y=90)
+        self.l=Label(text="Elija una de las variables");self.l.place(x=10,y=10); self.l.config(bg="#ffc2d1")
+        self.caja = Combobox(self, state="readonly",values=["Placas paralelas", "Esferico", "Cilindrico"])
+        self.caja.place(x=10, y =40)
         
-        btn1= Button(self, text="PlacasParalelas", width=15,command=self.PlacasParalelas, bg="#ffc2d1");btn1.place(x=330,y=10)
+        self.ld=Label(text="Tendra dielectrico?");self.ld.place(x=10,y=70); self.ld.config(bg="#ffc2d1")
+        self.caja2 = Combobox(self,state="readonly",values=["SI", "NO"])
+        self.caja2.place(x=10, y =100)
+
+        self.lv=Label(text="Ingrese el voltaje");self.lv.place(x=10,y=130); self.lv.config(bg="#ffc2d1")
+        self.ev=Entry(self);self.ev.place(x=10,y=160)
+
+        self.b = Button(self, text = "Crear",command= self.llamar); self.b.place(x=10, y =190)
+
+
+
+
+    def llamar(self): # para llamar a las diferentes pantallas
+        if(self.caja.get()=="Placas paralelas"):
+            self.PlacasGUI()
+
+
+
+    def PlacasGUI(self):
+
+        self.ventana = Toplevel(self)
+        self.ventana.geometry("1400x1400")
+        self.ventana.config(bg="#ffafcc")
+        #objetos
+
+        self.l1=Label(self.ventana,text="Distancia (m):");self.l1.place(x=10,y=10); self.l1.config(bg="#ffc2d1")
+        self.e1=Entry(self.ventana);self.e1.place(x=110,y=10)
+
+        self.l2=Label(self.ventana,text="Longitud (m):");self.l2.place(x=10,y=50); self.l2.config(bg="#ffddd2")
+        self.e2=Entry(self.ventana);self.e2.place(x=110,y=50)
+
+        self.l3=Label(self.ventana,text="diferencia de potencial (V):");self.l3.place(x=10,y=90); self.l3.config(bg="#ff8fab")
+        self.e3=Entry(self.ventana);self.e3.place(x=110,y=90)
+        
+        btn1= Button(self.ventana, text="PlacasParalelas", width=15,command=self.PlacasParalelas, bg="#ffc2d1");btn1.place(x=330,y=10)
         #btn2=Button(self, text="Disco", width=15, command=self.Disco, bg="#ffddd2");btn2.place(x=330,y=50)
         #btn3=Button(self, text="Linea de carga", width=15, command=self.LineaDeCarga,bg="#ff8fab");btn3.place(x=330,y=90)
         #btn4= Button(self, text="Placas Paralelas con Dielectrico", width=15,command=self.Anillo, bg="#ffc2d1");btn4.place(x=330,y=10)
 
-        self.l4=Label(text="Placas Paralelas:");self.l4.place(x=10,y=130); self.l4.config(bg="#ffc2d1")
-        self.l5=Label(text="");self.l5.place(x=10,y=170); self.l5.config(bg="#ff8fab")
-        self.l6=Label(text="resultado anillo:");self.l6.place(x=10,y=210); self.l6.config(bg="#ffc2d1")
-        self.l7=Label(text="");self.l7.place(x=10,y=250); self.l7.config(bg="#ff8fab")
+        self.l4=Label(self.ventana, text="Placas Paralelas:");self.l4.place(x=10,y=130); self.l4.config(bg="#ffc2d1")
+        self.l5=Label(self.ventana, text="");self.l5.place(x=10,y=170); self.l5.config(bg="#ff8fab")
+        self.l6=Label(self.ventana, text="resultado anillo:");self.l6.place(x=10,y=210); self.l6.config(bg="#ffc2d1")
+        self.l7=Label(self.ventana, text="");self.l7.place(x=10,y=250); self.l7.config(bg="#ff8fab")
 
-        self.l8=Label(text="integral disco:");self.l8.place(x=10,y=290); self.l8.config(bg="#ffc2d1")
-        self.l9=Label(text="");self.l9.place(x=10,y=320); self.l9.config(bg="#ff8fab")
-        self.l10=Label(text="resultado disco:");self.l10.place(x=10,y=350); self.l10.config(bg="#ffc2d1")
-        self.l11=Label(text="");self.l11.place(x=10,y=390); self.l11.config(bg="#ff8fab")
+        self.l8=Label(self.ventana, text="integral disco:");self.l8.place(x=10,y=290); self.l8.config(bg="#ffc2d1")
+        self.l9=Label(self.ventana, text="");self.l9.place(x=10,y=320); self.l9.config(bg="#ff8fab")
+        self.l10=Label(self.ventana, text="resultado disco:");self.l10.place(x=10,y=350); self.l10.config(bg="#ffc2d1")
+        self.l11=Label(self.ventana, text="");self.l11.place(x=10,y=390); self.l11.config(bg="#ff8fab")
 
-        self.l12=Label(text="integral linea de carga:");self.l12.place(x=10,y=450); self.l12.config(bg="#ffc2d1")
-        self.l13=Label(text="");self.l13.place(x=10,y=480); self.l13.config(bg="#ff8fab")
-        self.l14=Label(text="resultado linea de carga:");self.l14.place(x=10,y=510); self.l14.config(bg="#ffc2d1")
-        self.l15=Label(text="");self.l15.place(x=10,y=550); self.l15.config(bg="#ff8fab")
+        self.l12=Label(self.ventana, text="integral linea de carga:");self.l12.place(x=10,y=450); self.l12.config(bg="#ffc2d1")
+        self.l13=Label(self.ventana, text="");self.l13.place(x=10,y=480); self.l13.config(bg="#ff8fab")
+        self.l14=Label(self.ventana, text="resultado linea de carga:");self.l14.place(x=10,y=510); self.l14.config(bg="#ffc2d1")
+        self.l15=Label(self.ventana, text="");self.l15.place(x=10,y=550); self.l15.config(bg="#ff8fab")
 
         #canvas
-        self.c1 = Canvas(self, width=800, height=500, bg="white")
+        self.c1 = Canvas(self.ventana, width=800, height=500, bg="white")
         self.c1.place(x=450, y=150)
         self.c1.config(bg="misty rose")
+
 
     #pedir: dimensiones, voltaje y si es dielectrico
 
