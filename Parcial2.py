@@ -103,6 +103,10 @@ class app(Tk):
                 self.E= ((self.carga)/((self.EpsilonCero)*self.area))
                 print("Magnitud del Campo Eléctrico", self.E ,"N/C")
 
+                #energia
+                self.Energia = (1/(self.Capacitancia*(self.diferenciaPotencial**2) ))
+                print("Energia", self.Energia ,"J")
+
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
         except Exception as msg: 
