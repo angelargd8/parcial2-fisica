@@ -27,18 +27,19 @@ class app(Tk):
         self.config(bg="#ffafcc")
 
         #objetos
-        self.l1=Label(text="Altura (m):");self.l1.place(x=10,y=10); self.l1.config(bg="#ffc2d1")
+        self.l1=Label(text="Distancia (m):");self.l1.place(x=10,y=10); self.l1.config(bg="#ffc2d1")
         self.e1=Entry(self);self.e1.place(x=110,y=10)
 
         self.l2=Label(text="Longitud (m):");self.l2.place(x=10,y=50); self.l2.config(bg="#ffddd2")
         self.e2=Entry(self);self.e2.place(x=110,y=50)
 
-        self.l3=Label(text="Carga (q):");self.l3.place(x=10,y=90); self.l3.config(bg="#ff8fab")
+        self.l3=Label(text="diferencia de potencial (V):");self.l3.place(x=10,y=90); self.l3.config(bg="#ff8fab")
         self.e3=Entry(self);self.e3.place(x=110,y=90)
         
-        #btn1= Button(self, text="Anillo", width=15,command=self.Anillo, bg="#ffc2d1");btn1.place(x=330,y=10)
+        btn1= Button(self, text="PlacasParalelas", width=15,command=self.PlacasParalelas, bg="#ffc2d1");btn1.place(x=330,y=10)
         #btn2=Button(self, text="Disco", width=15, command=self.Disco, bg="#ffddd2");btn2.place(x=330,y=50)
         #btn3=Button(self, text="Linea de carga", width=15, command=self.LineaDeCarga,bg="#ff8fab");btn3.place(x=330,y=90)
+        #btn4= Button(self, text="Placas Paralelas con Dielectrico", width=15,command=self.Anillo, bg="#ffc2d1");btn4.place(x=330,y=10)
 
         self.l4=Label(text="Placas Paralelas:");self.l4.place(x=10,y=130); self.l4.config(bg="#ffc2d1")
         self.l5=Label(text="");self.l5.place(x=10,y=170); self.l5.config(bg="#ff8fab")
@@ -67,7 +68,51 @@ class app(Tk):
     #si tiene dielectrico: valor de la carga libre y ligada
 
     def PlacasParalelas(self):
+        """
+        Ecuaciones utiles: 
+        C= E0*(A/d)
+        C=Q/Vab
+        E= sigma/E0
+        E = Q/E0A
+        """
+        try:
+
+            self.EpsilonCero = 8.85*10**-12
+            self.longitud= float(self.e2.get())
+            self.distancia= float(self.e1.get())
+            self.area = self.longitud**2
+            if (self.longitud > 0 and self.distancia > 0):
+                #calculo de capacitancia
+                """
+                C= E0*(A/d)
+                """
+                self.Capacitancia= (self.EpsilonCero * self.area )/self.distancia
+                print("Capacitancia:", self.Capacitancia,"F")
+                #carga en cada placa
+                """
+                C=Q/Vab 
+                Q=C*Vab
+                """
+                self.diferenciaPotencial= float(self.e3.get())
+                self.carga= self.Capacitancia *  self.diferenciaPotencial
+                print("Carga", self.carga, "C")     
+                #magnitud del campo electrico en el espacio entre ellas
+                """
+                E = Q/E0A
+                """
+                self.E= ((self.carga)/((self.EpsilonCero)*self.area))
+                print("Magnitud del Campo Eléctrico", self.E ,"N/C")
+
+            else: 
+                messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
+        except Exception as msg: 
+            messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
+                
+
+    def PlacasParalelasDielectrico(self):
         pass
+
+    
 
     def Esferico(self):
         pass
