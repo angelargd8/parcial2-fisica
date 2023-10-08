@@ -225,29 +225,39 @@ class app(Tk):
                 # Para el capacitor de placas paralelas con dieléctrico hasta la mitad tendrá:
                 # Dos densidades de carga libre
                 # Una densidad de carga ligada
-                #------carga libre de aire ------
+
+                #------ densidad carga libre de aire ------
                 """
                 Qaire= C2*V
+                densidadAire= Qaire/ Area
                 """
-                self.Qaire= ((self.CapacitanciaMitadSin*2) * self.voltaje)
-                self.l12.config(text="carga libre de Aire:")
-                self.l13.config(text=str(self.Qaire))
+                #Qaire= ((self.CapacitanciaMitadSin) * self.voltaje)
+                self.densidadAire= (self.carga/  self.area)/2
+#------ 
+                #self.densidadAire= self.Qaire/ self.area
+                self.l12.config(text="DENSIDAD carga libre de Aire:")
+                self.l13.config(text=str(self.densidadAire))
 
-                #------carga libre de plexigas------
+                #------ densidad carga libre de plexiglas------
                 """
                 Qdielectrico= C1*V
+                densidadPlexiglas= Qaire/ Area
                 """
-                self.Qdielectrico= self.CapacitanciaMitadCon * self.voltaje
-                self.l14.config(text="carga libre de plexigas:")
-                self.l15.config(text=str(self.Qdielectrico))
+                #self.Qdielectrico= self.CapacitanciaMitadCon * self.voltaje
+                self.densidadPlexiglas= (self.carga/  (self.plexiglas * self.area))/2
+#------ 
+                #self.densidadPlexiglas= self.Qdielectrico/ self.area
+                self.l14.config(text="DENSIDAD carga libre de plexigas:")
+                self.l15.config(text=str(self.densidadPlexiglas))
 
-                #------carga ligada de plexigas------
+                #------ densidad carga ligada de plexigas------
                 """
                 Qligada=Q-Qdielectrico
+                densidadLigada= densidadLibre-densidadPlexigas
                 """
-                self.Qligada= self.carga- self.Qdielectrico
-                self.l16.config(text="carga ligada de plexigas:")
-                self.l17.config(text=str(self.Qligada))
+                self.densidadligada= self.densidadAire- self.densidadPlexiglas
+                self.l16.config(text="DENSIDAD de carga ligada de plexiglas:")
+                self.l17.config(text=str(self.densidadligada))
 
                 #------ parte de la grafica -----------   
                 self.c1.create_rectangle((self.c1.winfo_width()-(200*self.longitud) ) / 2, (self.c1.winfo_height()- (90*self.ancho) )/2,(self.c1.winfo_width()+(200*self.longitud) )/2 , (self.c1.winfo_height()-(90) )/2, outline='red', width="3")
@@ -255,12 +265,7 @@ class app(Tk):
                 self.c1.create_rectangle(((self.c1.winfo_width()-(200*self.longitud) ) / 2 ), ((self.c1.winfo_height()- (90*self.ancho) )/2)+ (100*self.distancia),(self.c1.winfo_width()+(200*self.longitud) )/2 , (self.c1.winfo_height()-(90) )/2 + (100*self.distancia), outline='red', width="3")
 
                 self.c1.create_rectangle((self.c1.winfo_width()-(200*self.longitud) ) / 2, (self.c1.winfo_height()-(90) )/2,(self.c1.winfo_width()+(1*self.longitud) )/2 , (self.c1.winfo_height()-(90*self.ancho) )/2 + (100*self.distancia), outline='purple', width="3")
-                #self.c1.create_rectangle(100, 100, 200, 400, outline='purple', width="3")
-
-
-
-
-               
+                               
 
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
@@ -278,7 +283,7 @@ class app(Tk):
             self.longitud= float(self.e2.get())
             self.distancia= float(self.e1.get())
             self.ancho= float(self.e4.get())
-            self.plexiglas= 3.40
+            self.plexiglas= float(3.40)
             self.voltaje= float(self.e3.get())
             self.area = self.longitud*self.ancho
 
@@ -316,22 +321,26 @@ class app(Tk):
                 self.l10.config(text="energia almacenada (J):")
                 self.l11.config(text=str(self.Energia)) 
 
-                #--------- carga libre ----------
+                #--------- densidad carga libre ----------
                 """
-                CargaLibre= C*V
+                densidadLibre= Q/A
                 """
-                self.CargaLibre= self.capacitancia * self.voltaje
-                self.l12.config(text="carga libre de plexigas:")
-                self.l13.config(text=str(self.CargaLibre))
+                #self.CargaLibre= self.capacitancia * self.voltaje
+                self.densidadLibre= self.carga/ self.area
+                self.l12.config(text=" DENSIDAD carga libre :")
+                self.l13.config(text=str(self.densidadLibre))
 
 
-                #--------- carga ligada ----------
+                #--------- densidad carga ligada ----------
                 """
-                Qligada=Q-Qdielectrico
+                densidadPlexiglas= Q/KA
+                densidadLigada= densidadLibre-densidadPlexiglas
                 """
-                self.Qligada= self.carga- self.CargaLibre
-                self.l14.config(text="carga ligada de plexigas:")
-                self.l15.config(text=str(self.Qligada))
+                #self.Qligada= self.carga - self.CargaLibre
+                self.densidadPlexiglas= self.carga/ (self.plexiglas * self.area)
+                self.densidadLigada= self.densidadLibre-self.densidadPlexiglas 
+                self.l14.config(text="DENSIDAD carga ligada de plexigas:")
+                self.l15.config(text=str(self.densidadLigada))
 
                 #------ parte de la grafica -----------   
                 self.c1.create_rectangle((self.c1.winfo_width()-(200*self.longitud) ) / 2, (self.c1.winfo_height()- (90*self.ancho) )/2,(self.c1.winfo_width()+(200*self.longitud) )/2 , (self.c1.winfo_height()-(90) )/2, outline='red', width="3")
