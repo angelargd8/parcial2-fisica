@@ -133,6 +133,8 @@ class app(Tk):
         self.l19=Label(self.ventana2, text="");self.l19.place(x=170,y=210); self.l19.config(bg="#ff8fab")
         self.l20=Label(self.ventana2, text="");self.l20.place(x=170,y=250); self.l20.config(bg="#ffc2d1")
         self.l21=Label(self.ventana2, text="");self.l21.place(x=170,y=290); self.l21.config(bg="#ff8fab")
+        self.l22=Label(self.ventana2, text="");self.l22.place(x=170,y=320); self.l22.config(bg="#ffc2d1")
+        self.l23=Label(self.ventana2, text="");self.l23.place(x=170,y=360); self.l23.config(bg="#ff8fab")
         #canvas
         self.c1 = Canvas(self.ventana2, width=800, height=500, bg="white")
         self.c1.place(x=370, y=150)
@@ -502,6 +504,8 @@ class app(Tk):
                 self.l19.config(text=" ")
                 self.l20.config(text=" ")
                 self.l21.config(text=" ")
+                self.l22.config(text=" ")
+                self.l23.config(text=" ")
 
 
 
@@ -513,6 +517,7 @@ class app(Tk):
 
 
     def EsfericoMitad(self):
+        #no esta terminado
         """
         Ecuaciones utiles: 
         C= 4pi*E0/((1/a)-(1/b))
@@ -555,10 +560,10 @@ class app(Tk):
                 #------energia------
                 #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
                 """
-                E= (1/2)*CV^2
+                E= (((1/2*C0*V^2)/2) + ((1/2*C*(V/K)^2)/2))
                 """
-                self.Energia = (1/2)*(self.Capacitancia2*(self.voltaje**2) )
-                self.l10.config(text="REVISAR energia almacenada (J):")
+                self.Energia = ((1/2)*(self.Capacitancia2*(self.voltaje**2))) # + ((1/2)*(self.Capacitancia1*(self.voltaje**2)))
+                self.l10.config(text="energia almacenada (J):")
                 self.l11.config(text=str(self.Energia))
 
                 #------carga libre de aire Ra superior------
@@ -568,26 +573,28 @@ class app(Tk):
                 (1/(K+1))(QK/(2PI*(RA*2))
                 (1/(K+1))(QK/(2PI*(RB*2)))
                 """
-                #self.densidadLibreAireRaSuperior = (1/(self.plexiglas + 1))*(self.carga/ (2 * pi * (self.radioA * 2)))
-                #self.l12.config(text="densidad Libre Aire Ra Superior")
-                #self.l13.config(text=str(self.densidadLibreAireRaSuperior))
+                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
+                self.densidadLibreAireRaSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioA*2)))
+                self.l12.config(text="carga Libre Aire Ra Superior")
+                self.l13.config(text=str(self.densidadLibreAireRaSuperior))
 
                 #------carga libre de aire Rb superior------
-                #self.densidadLibreAireRbSuperior = (1/(self.plexiglas + 1))*(self.carga/ (2 * pi * (self.radioB * 2)))
-                #self.l14.config(text="carga libre de aire Rb superior")
-                #self.l15.config(text=str(self.densidadLibreAireRbSuperior))
+                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
+                self.densidadLibreAireRbSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioB*2)))
+                self.l14.config(text="carga libre de aire Rb superior")
+                self.l15.config(text=str(self.densidadLibreAireRbSuperior))
                                 
                 #------carga libre de aire Ra inferior------
-                #self.densidadLibreAireRaInferior
-
-                #self.l14.config(text=" ")
-                #self.l15.config(text=" ")
+                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
+                self.densidadLibreAireRaInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioA*2)))
+                self.l16.config(text="carga libre de aire Ra inferior")
+                self.l17.config(text=str(self.densidadLibreAireRaInferior))
 
                 #------carga libre de aire Rb inferior------
-                #self.densidadLibreAireRbInferior
-
-                self.l16.config(text=" ")
-                self.l17.config(text=" ")
+                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
+                self.densidadLibreAireRbInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioB*2)))
+                self.l22.config(text="carga libre de aire Rb inferior")
+                self.l23.config(text=str(self.densidadLibreAireRbInferior))
 
                 #------carga ligada de plexigas Ra inferior------
                 """
@@ -604,11 +611,7 @@ class app(Tk):
                 self.cargaLigadaPlexiglasRbInferior= ((self.plexiglas-1)/(self.plexiglas+1))*(self.carga/(2*pi*(self.radioB)**2))
                 self.l20.config(text="carga ligada de plexigas Rb inferior:")
                 self.l21.config(text=str(self.cargaLigadaPlexiglasRbInferior))
-                
-                
-                
-                
-
+                            
 
 
             else: 
@@ -616,13 +619,11 @@ class app(Tk):
         except Exception as msg: 
             messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
 
+
     def EsfericoCompleto(self):
         pass
 
-
-
     def Cilindrico(self):
-        #no esta terminado
         """
         Ecuaciones utiles: 
         C= 2pi*E0*L/ln(b/a)
