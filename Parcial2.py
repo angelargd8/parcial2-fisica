@@ -707,7 +707,7 @@ class app(Tk):
                     self.c1.create_oval(400-(20*self.radioB),250-(20*self.radioB) , 400+(20*self.radioB), 250+(20*self.radioB), width = 3, fill = "blue")
                     self.c1.create_oval(400-(20*self.radioA),250-(20*self.radioA) , 400+(20*self.radioA), 250+(20*self.radioA), width = 3, fill = "white")
                  
-                     
+                    
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
         
@@ -768,7 +768,18 @@ class app(Tk):
                 self.l17.config(text=" ")
                 
 
-
+                # dibujo :D
+                self.c1.create_oval(200-(10*self.radioB),250-(10*self.radioB) , 200+(10*self.radioB), 250+(10*self.radioB), width = 2)
+                self.c1.create_oval(200-(10*self.radioA),250-(10*self.radioA) , 200+(10*self.radioA), 250+(10*self.radioA), width = 2)
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioB),250-(10*self.radioB) , (200+40*self.largo)+(10*self.radioB), 250+(10*self.radioB), width = 2)
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioA),250-(10*self.radioA) , (200+40*self.largo)+(10*self.radioA), 250+(10*self.radioA), width = 2)
+                 
+                #self.c1.create_arc(200-(10*self.radioB),250-(10*self.radioB) , 200+(10*self.radioB), 250+(10*self.radioB),start = 90,extent = 180, width = 2) 
+                self.c1.create_line(200, 250-(10*self.radioB), (200+40*self.largo), 250-(10*self.radioB), width = 2)  # Línea izquierda
+                self.c1.create_line(200, 250-(10*self.radioA), (200+40*self.largo), 250-(10*self.radioA), width = 2)  # Línea izquierda
+                self.c1.create_line(200, 250+(10*self.radioB), (200+40*self.largo), 250+(10*self.radioB), width = 2)  # Línea izquierda
+                self.c1.create_line(200, 250+(10*self.radioA), (200+40*self.largo), 250+(10*self.radioA), width = 2)  # Línea izquierda
+                
 
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
@@ -875,6 +886,22 @@ class app(Tk):
                 self.l22.config(text="Carga libre Inferior Rb")
                 self.l23.config(text=str(self.cargaLigadaRb))
 
+                # dibujo :D
+                self.c1.create_oval(200-(10*self.radioB),250-(10*self.radioB) , 200+(10*self.radioB), 250+(10*self.radioB), width = 2, outline = "blue")
+                self.c1.create_oval(200-(10*self.radioA),250-(10*self.radioA) , 200+(10*self.radioA), 250+(10*self.radioA), width = 2, outline = "blue")
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioB),250-(10*self.radioB) , (200+40*self.largo)+(10*self.radioB), 250+(10*self.radioB), width = 2)
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioA),250-(10*self.radioA) , (200+40*self.largo)+(10*self.radioA), 250+(10*self.radioA), width = 2)
+                 
+                self.c1.create_line(200, 250-(10*self.radioB), (200+40*self.largo), 250-(10*self.radioB), width = 2)  
+                self.c1.create_line(200, 250-(10*self.radioA), (200+40*self.largo), 250-(10*self.radioA), width = 2) 
+                self.c1.create_line(200, 250+(10*self.radioB), (200+40*self.largo), 250+(10*self.radioB), width = 2)  
+                self.c1.create_line(200, 250+(10*self.radioA), (200+40*self.largo), 250+(10*self.radioA), width = 2) 
+                #dielectrico
+                self.c1.create_line(200, 250-(10*self.radioB), (200+40*self.largo/2), (250-(10*self.radioB)), width = 2, fill = "blue")  
+                self.c1.create_line(200, 250-(10*self.radioA), (200+40*self.largo/2), (250-(10*self.radioA)), width = 2, fill = "blue") 
+                self.c1.create_line(200, 250+(10*self.radioB), (200+40*self.largo/2), (250+(10*self.radioB)), width = 2, fill = "blue") 
+                self.c1.create_line(200, 250+(10*self.radioA), (200+40*self.largo/2), (250+(10*self.radioA)), width = 2, fill = "blue") 
+                
 
 
 
@@ -979,7 +1006,16 @@ class app(Tk):
                 self.l23.config(text="")
                 
 
-
+                # dibujo :D
+                self.c1.create_oval(200-(10*self.radioB),250-(10*self.radioB) , 200+(10*self.radioB), 250+(10*self.radioB), width = 2, outline = "blue")
+                self.c1.create_oval(200-(10*self.radioA),250-(10*self.radioA) , 200+(10*self.radioA), 250+(10*self.radioA), width = 2, outline = "blue")
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioB),250-(10*self.radioB) , (200+40*self.largo)+(10*self.radioB), 250+(10*self.radioB), width = 2, outline = "blue")
+                self.c1.create_oval((200+40*self.largo)-(10*self.radioA),250-(10*self.radioA) , (200+40*self.largo)+(10*self.radioA), 250+(10*self.radioA), width = 2, outline = "blue")
+                 
+                self.c1.create_line(200, 250-(10*self.radioB), (200+40*self.largo), 250-(10*self.radioB), width = 2, fill= "blue")  
+                self.c1.create_line(200, 250-(10*self.radioA), (200+40*self.largo), 250-(10*self.radioA), width = 2, fill= "blue") 
+                self.c1.create_line(200, 250+(10*self.radioB), (200+40*self.largo), 250+(10*self.radioB), width = 2, fill= "blue")  
+                self.c1.create_line(200, 250+(10*self.radioA), (200+40*self.largo), 250+(10*self.radioA), width = 2, fill= "blue") 
 
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
