@@ -702,6 +702,11 @@ class app(Tk):
                     self.cargaLigadaPlexiglasRb = self.densidadLibreAireRb*(1-1/self.plexiglas)
                     self.l20.config(text="carga ligada de plexigas Rb :")
                     self.l21.config(text=str(self.cargaLigadaPlexiglasRb))
+
+                    self.l16.config(text=" ")
+                    self.l17.config(text=" ")
+                    self.l22.config(text=" ")
+                    self.l23.config(text=" ")
                     
                     #---- dibujo -----         
                     self.c1.create_oval(400-(20*self.radioB),250-(20*self.radioB) , 400+(20*self.radioB), 250+(20*self.radioB), width = 3, fill = "blue")
