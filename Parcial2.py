@@ -175,6 +175,12 @@ class app(Tk):
         self.l15=Label(self.ventana3, text="");self.l15.place(x=10,y=510); self.l15.config(bg="#ff8fab")
         self.l16=Label(self.ventana3, text="");self.l16.place(x=10,y=550); self.l16.config(bg="#ffc2d1")
         self.l17=Label(self.ventana3, text="");self.l17.place(x=10,y=590); self.l17.config(bg="#ff8fab")
+        self.l18=Label(self.ventana3, text="");self.l18.place(x=170,y=170); self.l18.config(bg="#ffc2d1")
+        self.l19=Label(self.ventana3, text="");self.l19.place(x=170,y=210); self.l19.config(bg="#ff8fab")
+        self.l20=Label(self.ventana3, text="");self.l20.place(x=170,y=250); self.l20.config(bg="#ffc2d1")
+        self.l21=Label(self.ventana3, text="");self.l21.place(x=170,y=290); self.l21.config(bg="#ff8fab")
+        self.l22=Label(self.ventana3, text="");self.l22.place(x=170,y=320); self.l22.config(bg="#ffc2d1")
+        self.l23=Label(self.ventana3, text="");self.l23.place(x=170,y=360); self.l23.config(bg="#ff8fab")
         
         #canvas
         self.c1 = Canvas(self.ventana3, width=800, height=500, bg="white")
@@ -517,7 +523,6 @@ class app(Tk):
 
 
     def EsfericoMitad(self):
-        #no esta terminado
         """
         Ecuaciones utiles: 
         C= 4pi*E0/((1/a)-(1/b))
@@ -537,8 +542,8 @@ class app(Tk):
                 self.limpiar()
                 #-----calculo de capacitancia------
                 """
-                C= 4pi*E0/((1/a)-(1/b))
-                C= 4pi*E0* (rb*ra)/((rb)-(ra))
+                C= k2pi*E0/((1/a)-(1/b))
+                C= k2pi*E0* (rb*ra)/((rb)-(ra))
                 """
                 
                 #-------capacidad total----
@@ -558,7 +563,6 @@ class app(Tk):
                 self.l9.config(text=str(self.carga))
 
                 #------energia------
-                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
                 """
                 E= (((1/2*C0*V^2)/2) + ((1/2*C*(V/K)^2)/2))
                 """
@@ -568,31 +572,27 @@ class app(Tk):
 
                 #------carga libre de aire Ra superior------
                 """
-                (1/(K+1))(Q/(2PI*(RA*2)))
-                (1/(K+1))(Q/(2PI*(RB*2)))
-                (1/(K+1))(QK/(2PI*(RA*2))
-                (1/(K+1))(QK/(2PI*(RB*2)))
+                (1/(K+1))(Q/(2PI*(RA**2)))
+                (1/(K+1))(Q/(2PI*(RB**2)))
+                (1/(K+1))(QK/(2PI*(RA**2))
+                (1/(K+1))(QK/(2PI*(RB**2)))
                 """
-                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
-                self.densidadLibreAireRaSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioA*2)))
+                self.densidadLibreAireRaSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioA**2)))
                 self.l12.config(text="carga Libre Aire Ra Superior")
                 self.l13.config(text=str(self.densidadLibreAireRaSuperior))
 
                 #------carga libre de aire Rb superior------
-                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
-                self.densidadLibreAireRbSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioB*2)))
+                self.densidadLibreAireRbSuperior = (1/(self.plexiglas + 1)) * ((self.carga)/ (2 * pi * (self.radioB**2)))
                 self.l14.config(text="carga libre de aire Rb superior")
                 self.l15.config(text=str(self.densidadLibreAireRbSuperior))
                                 
                 #------carga libre de aire Ra inferior------
-                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
-                self.densidadLibreAireRaInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioA*2)))
+                self.densidadLibreAireRaInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioA**2)))
                 self.l16.config(text="carga libre de aire Ra inferior")
                 self.l17.config(text=str(self.densidadLibreAireRaInferior))
 
                 #------carga libre de aire Rb inferior------
-                #REVISAR QUE EL RESULTADO NO ES EL CORRECTO 
-                self.densidadLibreAireRbInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioB*2)))
+                self.densidadLibreAireRbInferior = (1/(self.plexiglas + 1)) * ((self.carga * self.plexiglas)/ (2 * pi * (self.radioB**2)))
                 self.l22.config(text="carga libre de aire Rb inferior")
                 self.l23.config(text=str(self.densidadLibreAireRbInferior))
 
@@ -621,7 +621,84 @@ class app(Tk):
 
 
     def EsfericoCompleto(self):
-        pass
+        
+        
+        self.EpsilonCero = 8.85*10**-12
+        self.radioA= float(self.e1.get())
+        self.radioB= float(self.e2.get())
+        self.voltaje= float(self.e3.get())
+        self.plexiglas= float(3.40)
+        try:
+            if (self.radioA > 0 and self.radioB > 0 and self.radioA!= self.radioB ):
+                    #-----limpiar canvas-----
+                    self.limpiar()
+                    #-----calculo de capacitancia------
+                    """
+                    C = k(Ra*Rb)(4*pi*e)/(b-a)
+                    C = (k*4*pi*e)*((Ra*Rb)/(Rb-Ra))
+                    """
+                    
+                    #-------capacidad total----
+                    self.Capacitancia = (self.plexiglas*4*pi*self.EpsilonCero)*((self.radioA*self.radioB)/(self.radioB-self.radioA))
+                    self.l7.config(text=str( self.Capacitancia))
+
+                    #------carga del capacitor ------
+                    """
+                    Q = Cog*V
+                    """
+                    self.cog = (4*pi*self.EpsilonCero)*((self.radioA*self.radioB)/(self.radioB-self.radioA))
+                    self.carga= self.voltaje*self.cog 
+                    self.l8.config(text="carga del capacitor (C):")
+                    self.l9.config(text=str(self.carga))
+
+                    #------energia acumulada------
+                    """
+                    E= (C*V^2)/2
+                    """
+                    self.Energia = (self.Capacitancia*(self.voltaje/self.plexiglas)**2)/2
+                    self.l10.config(text="energia almacenada (J):")
+                    self.l11.config(text=str(self.Energia))
+
+                    #------carga libre de aire Ra superior------
+                    """
+                    Q/((4*pi*(Ra**2))) 
+                    Q/((4*pi*(Rb**2)))
+                    """
+                    #------Carga libre de aire Ra -----------
+                    self.densidadLibreAireRa=  self.carga/((4*pi*(self.radioA**2)))
+                    self.l12.config(text="carga Libre Aire Ra ")
+                    self.l13.config(text=str(self.densidadLibreAireRa))
+
+                    #------carga libre de aire Rb ------
+                    self.densidadLibreAireRb = self.carga/((4*pi*(self.radioB**2)))
+                    self.l14.config(text="carga libre de aire Rb ")
+                    self.l15.config(text=str(self.densidadLibreAireRb))
+                                    
+                    #------carga ligada de plexigas ------
+                    """
+                    CargaLibre1*(1-1/k)
+                    CargaLibre2*(1-1/k)
+                    """
+                    #----- carga ligada plexigas Ra -----------
+                    self.cargaLigadaPlexiglasRa= self.densidadLibreAireRa*(1-1/self.plexiglas)
+                    self.l18.config(text="carga ligada de plexigas Ra :")
+                    self.l19.config(text=str(self.cargaLigadaPlexiglasRa))
+
+                    #------carga ligada de plexigas Rb ------
+                
+                    self.cargaLigadaPlexiglasRb = self.densidadLibreAireRb*(1-1/self.plexiglas)
+                    self.l20.config(text="carga ligada de plexigas Rb :")
+                    self.l21.config(text=str(self.cargaLigadaPlexiglasRb))
+                                
+
+            else: 
+                messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
+        
+
+        except Exception as msg: 
+            messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
+
+
 
     def Cilindrico(self):
         """
@@ -672,6 +749,7 @@ class app(Tk):
                 self.l15.config(text=" ")
                 self.l16.config(text=" ")
                 self.l17.config(text=" ")
+                
 
 
 
@@ -681,10 +759,217 @@ class app(Tk):
             messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
 
     def CilindricoMitad(self):
-        pass
+        """
+        Ecuaciones utiles: 
+        C= 2pi*E0*L/ln(b/a)
+        Q=C*Vab
+        E= (1/2)*CV^2
+        """
+        self.EpsilonCero = 8.85*10**-12
+        self.radioA= float(self.e1.get())
+        self.radioB= float(self.e2.get())
+        self.largo= float(self.e3.get())
+        self.voltaje= float(self.e4.get())
+        self.plexiglas= float(3.40)
+
+        try:
+
+            self.EpsilonCero = 8.85*10**-12
+            self.radioA= float(self.e1.get())
+            self.radioB= float(self.e2.get())
+            self.largo= float(self.e3.get())
+            self.voltaje= float(self.e4.get())
+            self.plexiglas= float(3.40)
+
+            if (self.radioA > 0 and self.radioB > 0 and  self.largo > 0):
+                #-----limpiar canvas-----
+                self.limpiar()
+                #-----calculo de capacitancia------
+                """
+                C= (k)(pi*l*e)/(ln(Rb/Ra)) + (pi*l*e)/(ln(Rb/Ra))
+                """
+                self.Capacitancia = (self.plexiglas * pi * self.largo * self.EpsilonCero) / (log(self.radioB / self.radioA)) + (pi * self.largo * self.EpsilonCero) / (log(self.radioB / self.radioA))
+                self.l7.config(text=str( self.Capacitancia))
+
+                #------carga del capacitor ------
+                """ 
+                Q = Cog*V
+                Cog = (2*pi*l*e)/(ln(Rb/Ra))
+                """
+                self.cog = (2*pi*self.largo*self.EpsilonCero)/(log(self.radioB/self.radioA))
+                self.carga= self.cog * self.voltaje
+                self.l8.config(text="carga del capacitor (C):")
+                self.l9.config(text=str(self.carga))
+
+                #------energia------
+                """
+                E = (C*V^2)/2
+                """
+                self.Energia = (self.cog*(self.voltaje**2))/4 + (self.Capacitancia*(self.voltaje/self.plexiglas)**2)/4
+                self.l10.config(text="energia almacenada (J):")
+                self.l11.config(text=str(self.Energia))
+
+                # ---- cargas libres -----
+                """
+                
+                Q/((2*pi*Ra*l*(k+1))/2)
+                Q/((2*pi*Rb*l*(k+1))/2)
+                (Q*k)/((2*pi*Ra*l*(k+1))/2)
+                (Q*k)/((2*pi*Rb*l*(k+1))/2)
+
+                """
+
+                # ----- carga libre Radio a Superior --------
+                self.cargaLibreSuperiorRa = self.carga/((2*pi*self.radioA*self.largo*(self.plexiglas+1))/2)
+                self.l12.config(text="Carga libre Superior Ra")
+                self.l13.config(text=str(self.cargaLibreSuperiorRa))
+
+                # ----- carga libre Radio b Superior --------
+                self.cargaLibreSuperiorRb = self.carga/((2*pi*self.radioB*self.largo*(self.plexiglas+1))/2)
+                self.l14.config(text="Carga libre Superior Rb")
+                self.l15.config(text=str(self.cargaLibreSuperiorRb))
+
+
+                # ----- carga libre Radio a Inferior --------
+                self.cargaLibreInferiorRa = (self.carga*self.plexiglas)/((2*pi*self.radioA*self.largo*(self.plexiglas+1))/2)
+                self.l16.config(text="Carga libre Inferior Ra")
+                self.l17.config(text=str(self.cargaLibreInferiorRa))
+
+
+                # ----- carga libre Radio a Inferior --------
+                self.cargaLibreInferiorRb = (self.carga*self.plexiglas)/((2*pi*self.radioB*self.largo*(self.plexiglas+1))/2)
+                self.l18.config(text="Carga libre Inferior Rb")
+                self.l19.config(text=str(self.cargaLibreInferiorRb))
+
+
+                # ---- cargas ligadas
+                """
+                CargaLibreInferiorRa*(1-1/k)
+                CargaLibreInferiorRb*(1-1/k)
+                """
+             
+                #---- carga ligada Ra -----
+                self.cargaLigadaRa = self.cargaLibreInferiorRa*(1-1/self.plexiglas)
+                self.l20.config(text="Carga libre Inferior Ra")
+                self.l21.config(text=str(self.cargaLigadaRa))
+                
+                #---- carga ligada Ra -----
+                self.cargaLigadaRb = self.cargaLibreInferiorRb*(1-1/self.plexiglas)
+                self.l22.config(text="Carga libre Inferior Rb")
+                self.l23.config(text=str(self.cargaLigadaRb))
+
+
+
+
+
+            else: 
+                messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
+        except Exception as msg: 
+            messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
+
 
     def CilindricoCompleto(self):
-        pass
+        """
+        Ecuaciones utiles: 
+        C= 2pi*E0*L/ln(b/a)
+        Q=C*Vab
+        E= (1/2)*CV^2
+        """
+        self.EpsilonCero = 8.85*10**-12
+        self.radioA= float(self.e1.get())
+        self.radioB= float(self.e2.get())
+        self.largo= float(self.e3.get())
+        self.voltaje= float(self.e4.get())
+        self.plexiglas= float(3.40)
+
+        try:
+
+            self.EpsilonCero = 8.85*10**-12
+            self.radioA= float(self.e1.get())
+            self.radioB= float(self.e2.get())
+            self.largo= float(self.e3.get())
+            self.voltaje= float(self.e4.get())
+            self.plexiglas= float(3.40)
+
+            if (self.radioA > 0 and self.radioB > 0 and  self.largo > 0):
+                #-----limpiar canvas-----
+                self.limpiar()
+                #-----calculo de capacitancia------
+                """
+                C= 
+                C = (k*2*pi*l*e)/(ln(Rb/Ra))
+                """
+                self.Capacitancia = (self.plexiglas * 2 * pi * self.largo * self.EpsilonCero) / (log(self.radioB / self.radioA))
+                self.l7.config(text=str( self.Capacitancia))
+
+                #------carga del capacitor ------
+                """ 
+                Q = Cog*V
+                Cog = (2*pi*l*e)/(ln(Rb/Ra))
+                """
+                self.cog = (2*pi*self.largo*self.EpsilonCero)/(log(self.radioB/self.radioA))
+                self.carga= self.cog * self.voltaje
+                self.l8.config(text="carga del capacitor (C):")
+                self.l9.config(text=str(self.carga))
+
+                #------energia------
+                """
+                E = (C*(Voltage/k)**2)/2
+                """
+                self.Energia = (self.Capacitancia*(self.voltaje/self.plexiglas)**2)/2
+                self.l10.config(text="energia almacenada (J):")
+                self.l11.config(text=str(self.Energia))
+
+                # ---- cargas libres -----
+                """
+                
+                Q/((2*pi*Ra*l))
+                Q/((2*pi*Rb*l))
+
+                """
+
+                # ----- carga libre Radio a  --------
+                self.cargaLibreRa = self.carga/((2*pi*self.radioA*self.largo))
+                self.l12.config(text="Carga libre Ra")
+                self.l13.config(text=str(self.cargaLibreRa))
+
+                # ----- carga libre Radio b  --------
+                self.cargaLibreRb = self.carga/((2*pi*self.radioB*self.largo))
+                self.l14.config(text="Carga libre Rb")
+                self.l15.config(text=str(self.cargaLibreRb))
+
+
+
+                # ---- cargas ligadas
+                """
+                CargaLibreInferiorRa*(1-1/k)
+                CargaLibreInferiorRb*(1-1/k)
+                """
+             
+                #---- carga ligada Ra -----
+                self.cargaLigadaRa = self.cargaLibreRa*(1-1/self.plexiglas)
+                self.l16.config(text="Carga libre Ra")
+                self.l17.config(text=str(self.cargaLigadaRa))
+                
+                #---- carga ligada Ra -----
+                self.cargaLigadaRb = self.cargaLibreRb*(1-1/self.plexiglas)
+                self.l18.config(text="Carga libre Rb")
+                self.l19.config(text=str(self.cargaLigadaRb))
+
+                self.l20.config(text="")
+                self.l21.config(text="")
+                self.l22.config(text="")
+                self.l23.config(text="")
+                
+
+
+
+            else: 
+                messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
+        except Exception as msg: 
+            messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
+
+
                   
 
 
