@@ -514,6 +514,12 @@ class app(Tk):
                 self.l23.config(text=" ")
 
 
+                #parte grafica xd
+                # width=800, height=500
+                self.c1.create_oval(400-(20*self.radioA),250-(20*self.radioA) , 400+(20*self.radioA), 250+(20*self.radioA), width = 3)
+                self.c1.create_oval(400-(20*self.radioB),250-(20*self.radioB) , 400+(20*self.radioB), 250+(20*self.radioB), width = 3)
+               
+                       
 
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
@@ -611,6 +617,13 @@ class app(Tk):
                 self.cargaLigadaPlexiglasRbInferior= ((self.plexiglas-1)/(self.plexiglas+1))*(self.carga/(2*pi*(self.radioB)**2))
                 self.l20.config(text="carga ligada de plexigas Rb inferior:")
                 self.l21.config(text=str(self.cargaLigadaPlexiglasRbInferior))
+
+                #parte grafica xd
+                # width=800, height=500 
+                self.c1.create_oval(400-(20*self.radioB),250-(20*self.radioB) , 400+(20*self.radioB), 250+(20*self.radioB), width = 3)
+                self.c1.create_arc(400-(20*self.radioB),250-(20*self.radioB) ,400+(20*self.radioB), 250+(20*self.radioB),start = 0,extent = 180,  width = 3 , fill = "blue")
+                self.c1.create_oval(400-(20*self.radioA),250-(20*self.radioA) , 400+(20*self.radioA), 250+(20*self.radioA), width = 3, fill = "white")
+                 
                             
 
 
@@ -689,8 +702,12 @@ class app(Tk):
                     self.cargaLigadaPlexiglasRb = self.densidadLibreAireRb*(1-1/self.plexiglas)
                     self.l20.config(text="carga ligada de plexigas Rb :")
                     self.l21.config(text=str(self.cargaLigadaPlexiglasRb))
-                                
-
+                    
+                    #---- dibujo -----         
+                    self.c1.create_oval(400-(20*self.radioB),250-(20*self.radioB) , 400+(20*self.radioB), 250+(20*self.radioB), width = 3, fill = "blue")
+                    self.c1.create_oval(400-(20*self.radioA),250-(20*self.radioA) , 400+(20*self.radioA), 250+(20*self.radioA), width = 3, fill = "white")
+                 
+                     
             else: 
                 messagebox.showerror("Error", "Ingrese valores validos para la distancia y longitud")
         
@@ -970,7 +987,6 @@ class app(Tk):
             messagebox.showerror("error", "asegurese de ingresar un número válido y todos los valores ")
 
 
-                  
 
 
     def limpiar(self):
